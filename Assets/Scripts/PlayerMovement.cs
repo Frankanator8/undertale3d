@@ -3,27 +3,31 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    // Update is called once per frame
+    Rigidbody rb;
+    Vector3 input;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+    }
+
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.back * Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
-        }
-        
+        input = Vector3.zero;
+        if (Input.GetKey(KeyCode.W)) input += Vector3.left;
+        if (Input.GetKey(KeyCode.S)) input += Vector3.right;
+        if (Input.GetKey(KeyCode.A)) input += Vector3.back;
+        if (Input.GetKey(KeyCode.D)) input += Vector3.forward;
+        if (input.sqrMagnitude > 1f)
+            input.Normalize();
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 worldMove = transform.TransformDirection(input) * speed;
+        Vector3 velocity = rb.linearVelocity;
+        rb.linearVelocity = new Vector3(worldMove.x, velocity.y, worldMove.z);
     }
 }
