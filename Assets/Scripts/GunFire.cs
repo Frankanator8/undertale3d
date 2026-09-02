@@ -3,12 +3,16 @@ using UnityEngine;
 public class GunFire : MonoBehaviour
 {
     public GameObject bulletPrefab;
+    public GameObject player;
     public Camera camera;
     public float fireRate = 0.5f; // Time between shots
     float nextFireTime = 0f;
 
-    // Update is called once per frame
-    void Update()
+    public float bulletSpeed = 20f; // Speed of the bullet
+
+
+    // FixedUpdate is called once per fixed frame
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0)) // Left mouse button to fire
         {
@@ -32,9 +36,12 @@ public class GunFire : MonoBehaviour
             Physics.IgnoreCollision(bulletCol, playerCol);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        Vector3 playerVelocity = player.GetComponent<Rigidbody>().linearVelocity;
+
         if (rb != null)
         {
-            rb.AddForce(camera.transform.forward * 1000f);
+            rb.AddForce(camera.transform.forward * bulletSpeed, ForceMode.Impulse);
+            rb.AddForce(playerVelocity, ForceMode.VelocityChange); // Add player's velocity to the bullet
         }
     }
 }
