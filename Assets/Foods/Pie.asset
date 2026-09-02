@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   itemName: Butterscotch Pie
   healthRestored: -1
+  eatTime: 5
   itemIcon: {fileID: 21300000, guid: b3ff2183d336a425bb7b90d9c707965e, type: 3}
+  unisicleItem: {fileID: 0}

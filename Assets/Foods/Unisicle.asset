@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   itemName: Unisicle
   healthRestored: 11
+  eatTime: 2.5
   itemIcon: {fileID: 21300000, guid: 86155a88b548c450795ebb778d705cfc, type: 3}
+  unisicleItem: {fileID: 0}

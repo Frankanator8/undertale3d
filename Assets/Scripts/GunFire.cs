@@ -31,7 +31,7 @@ public class GunFire : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, camera.transform.position + camera.transform.forward * 2f, camera.transform.rotation);
 
         Collider bulletCol = bullet.GetComponent<Collider>();
-        Collider playerCol = GetComponent<Collider>();
+        Collider playerCol = player.GetComponent<Collider>();
         if (bulletCol != null && playerCol != null)
             Physics.IgnoreCollision(bulletCol, playerCol);
 

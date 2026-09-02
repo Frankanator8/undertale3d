@@ -45,6 +45,17 @@ public class InventorySlot : MonoBehaviour
                 itemCountText.text = "";
             }
         }
+        if (Input.GetKeyDown(keyCode))
+        {
+            if (isGunSlot)
+            {
+                Inventory.SetActiveFoodItem(null); // Set active food item to null when gun is selected
+            }
+            else
+            {
+                Inventory.SetActiveFoodItem(foodItem);
+            }
+        }
 
     }
 }

@@ -5,6 +5,8 @@ public class FoodItem : ScriptableObject
     public string itemName;
     public int healthRestored;
 
+    public float eatTime = 1f; // Time it takes to eat the item
+
     public Sprite itemIcon;
     public FoodItem unisicleItem;
 

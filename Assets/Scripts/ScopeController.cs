@@ -11,12 +11,12 @@ public class ScopeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1)) // Right mouse button to toggle scope
+        if (Input.GetMouseButtonDown(1) && !Inventory.HasActiveFood()) // Right mouse button to toggle scope (not while eating)
         {
             StartCoroutine(ShowScopeOverlay());
         }
 
-        if (Input.GetMouseButtonUp(1)) // Hide scope when right mouse button is released
+        if (Input.GetMouseButtonUp(1) && !Inventory.HasActiveFood()) // Hide scope when right mouse button is released
         {
             scopeOverlay.SetActive(false); // Hide the scope overlay when not aiming
             camera.fieldOfView = 60f; // Reset camera FOV to default

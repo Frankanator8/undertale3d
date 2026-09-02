@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
     Vector3 input;
+    public bool freeze;
 
     void Awake()
     {
@@ -22,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) input += Vector3.forward;
         if (input.sqrMagnitude > 1f)
             input.Normalize();
+        
+        if (freeze)
+        {
+            input = Vector3.zero;
+        }
     }
 
     void FixedUpdate()

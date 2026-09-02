@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   itemName: Legendary Hero
   healthRestored: 40
+  eatTime: 3.6
   itemIcon: {fileID: 21300000, guid: 5078571a8987c4ae98152ef2c857d2e0, type: 3}
+  unisicleItem: {fileID: 0}
