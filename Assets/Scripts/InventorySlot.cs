@@ -13,12 +13,12 @@ public class InventorySlot : MonoBehaviour
 
     public Sprite gunIcon; // Assign this in the Inspector with the gun icon sprite
 
-    bool isGunSlot = false;
+    public bool isGunSlot = false;
     void Start()
     {
         image = transform.Find("Image").GetComponent<Image>();
-        itemKeyText = transform.Find("Number").GetComponent<TextMeshProUGUI>();
-        itemCountText = transform.Find("Keyboard").Find("Key").GetComponent<TextMeshProUGUI>();
+        itemCountText = transform.Find("Number").GetComponent<TextMeshProUGUI>();
+        itemKeyText = transform.Find("Keyboard").Find("Key").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class InventorySlot : MonoBehaviour
         if (isGunSlot)
         {
             image.sprite = gunIcon;
-            itemKeyText.text = keyCode.ToString();
+            itemKeyText.text = keyCode.ToString()[5].ToString();
             itemCountText.text = ""; // No count for the gun
         }
         else
@@ -35,7 +35,7 @@ public class InventorySlot : MonoBehaviour
             if (foodItem != null)
             {
                 image.sprite = foodItem.itemIcon;
-                itemKeyText.text = keyCode.ToString();
+                itemKeyText.text = keyCode.ToString()[5].ToString(); // Display only the number part of the KeyCode (e.g., "Alpha1" becomes "1")
                 itemCountText.text = itemCount.ToString(); // Assuming you have a count for the item, replace "1" with the actual count
             }
             else

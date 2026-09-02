@@ -6,6 +6,7 @@ public class FoodItem : ScriptableObject
     public int healthRestored;
 
     public Sprite itemIcon;
+    public FoodItem unisicleItem;
 
     public void Consume(PlayerHealth playerHealth)
     {
@@ -19,8 +20,9 @@ public class FoodItem : ScriptableObject
 
         if (itemName == "Bisicle")
         {
-            // Add Unisicle to inventory
+            Inventory.AddItem(unisicleItem);
         }
+        Inventory.RemoveItem(this);
         
     }
 }
