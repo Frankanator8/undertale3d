@@ -468,7 +468,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 183
+    m_Bits: 439
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1398,7 +1398,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74828788791f74fdd8a99e5a73b926f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 30
+  jumpForce: 20
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   freeze: 0
 --- !u!4 &751515083 stripped
 Transform:
@@ -2679,7 +2683,7 @@ GameObject:
   - component: {fileID: 1451174959}
   - component: {fileID: 1451174958}
   - component: {fileID: 1451174957}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
