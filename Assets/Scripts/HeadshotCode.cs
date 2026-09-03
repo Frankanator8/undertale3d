@@ -1,15 +1,15 @@
 using System;
 using UnityEngine;
 
-public class HeadshotCode : MonoBehaviour
+public class HeadshotCode : MonoBehaviour, IHitscanTarget
 {
     public Action onHeadshot;
 
-    void OnTriggerEnter(Collider other)
+    public bool BlocksHitscan => false;
+
+    public void OnHitscan(GameObject source)
     {
-        if (other.CompareTag("Bullet"))
-        {
-            onHeadshot?.Invoke();
-        }
+        Debug.Log("Headshot!");
+        onHeadshot?.Invoke();
     }
 }

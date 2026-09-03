@@ -9,39 +9,61 @@ public class GunFire : MonoBehaviour
     float nextFireTime = 0f;
 
     public float bulletSpeed = 20f; // Speed of the bullet
+    public float fireShakeIntensity = 2f;
+    public float fireShakeDuration = 0.15f;
 
+    CameraController cameraController;
+    float maxDistance;
+    int projectileLayer;
 
-    // FixedUpdate is called once per fixed frame
-    void FixedUpdate()
+    void Start()
+    {
+        if (camera != null)
+            cameraController = camera.GetComponent<CameraController>();
+
+        projectileLayer = bulletPrefab != null ? bulletPrefab.layer : 0;
+        float lifetime = 5f;
+        if (bulletPrefab != null)
+        {
+            BulletExpire expire = bulletPrefab.GetComponent<BulletExpire>();
+            if (expire != null)
+                lifetime = expire.lifetime;
+        }
+        maxDistance = bulletSpeed * lifetime;
+    }
+
+    void Update()
     {
         if (Input.GetMouseButtonDown(0)) // Left mouse button to fire
         {
-            if (Time.time >= nextFireTime)
-            {
-                FireBullet();
-                nextFireTime = Time.time + fireRate;
-            }
-
+            FireBullet();
         }
     }
 
     void FireBullet()
     {
-        // Instantiate the bullet at the camera's position and rotation
-        GameObject bullet = Instantiate(bulletPrefab, camera.transform.position + camera.transform.forward * 2f, camera.transform.rotation);
+        Vector3 origin = camera.transform.position + camera.transform.forward * 2f;
+        Vector3 direction = camera.transform.forward;
 
-        Collider bulletCol = bullet.GetComponent<Collider>();
-        Collider playerCol = player.GetComponent<Collider>();
-        if (bulletCol != null && playerCol != null)
-            Physics.IgnoreCollision(bulletCol, playerCol);
+        GameObject bullet = Instantiate(bulletPrefab, origin, camera.transform.rotation);
+
+        Hitscan.Fire(
+            new Ray(origin, direction),
+            maxDistance,
+            projectileLayer,
+            player != null ? player.transform : null,
+            bullet,
+            out Vector3 impactPoint);
+
+        BulletExpire expire = bullet.GetComponent<BulletExpire>();
+        if (expire != null)
+            expire.SetImpact(impactPoint, direction);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        Vector3 playerVelocity = player.GetComponent<Rigidbody>().linearVelocity;
-
         if (rb != null)
-        {
-            rb.AddForce(camera.transform.forward * bulletSpeed, ForceMode.Impulse);
-            rb.AddForce(playerVelocity, ForceMode.VelocityChange); // Add player's velocity to the bullet
-        }
+            rb.AddForce(direction * bulletSpeed, ForceMode.Impulse);
+
+        if (cameraController != null)
+            cameraController.Shake(fireShakeIntensity, fireShakeDuration);
     }
 }

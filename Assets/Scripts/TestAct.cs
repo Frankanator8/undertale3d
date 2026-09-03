@@ -10,7 +10,6 @@ public class TestAct : MonoBehaviour
 
     void OnAct(GameObject bullet)
     {
-        Destroy(bullet);
         GetComponentInChildren<ActCode>().SwitchToMercySprite();
         Dialogue.UpdateText("* You acted on the enemy.");
     }

@@ -1,15 +1,15 @@
 using System;
 using UnityEngine;
 
-public class ShotCode : MonoBehaviour
+public class ShotCode : MonoBehaviour, IHitscanTarget
 {
     public Action<GameObject> onShot;
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Bullet"))
-        {
-            onShot?.Invoke(other.gameObject);
-        }
-    }
 
+    public bool BlocksHitscan => true;
+
+    public void OnHitscan(GameObject source)
+    {
+        Debug.Log("Shot!");
+        onShot?.Invoke(source);
+    }
 }

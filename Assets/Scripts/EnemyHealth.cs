@@ -22,13 +22,20 @@ public class EnemyHealth : MonoBehaviour
     void OnHeadshot()
     {
         currentHealth -= headshotDamage;
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
         UpdateHealthBar();
     }
 
     void OnShot(GameObject bullet)
     {
-        Destroy(bullet);
         currentHealth -= damage;
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
         UpdateHealthBar();
     }
 

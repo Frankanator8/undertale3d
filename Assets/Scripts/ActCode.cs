@@ -1,17 +1,16 @@
 using System;
 using UnityEngine;
 
-public class ActCode : MonoBehaviour
+public class ActCode : MonoBehaviour, IHitscanTarget
 {
     public Action<GameObject> onAct;
     public Sprite mercySprite;
 
-    void OnTriggerEnter(Collider other)
+    public bool BlocksHitscan => true;
+
+    public void OnHitscan(GameObject source)
     {
-        if (other.CompareTag("Bullet"))
-        {
-            onAct?.Invoke(other.gameObject);
-        }
+        onAct?.Invoke(source);
     }
 
     public void SwitchToMercySprite()
@@ -19,4 +18,3 @@ public class ActCode : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = mercySprite;
     }
 }
-

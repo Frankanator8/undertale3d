@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
 
     Rigidbody rb;
+    CameraController cameraController;
     Vector3 input;
     public bool freeze;
 
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        cameraController = GetComponentInChildren<CameraController>();
     }
 
     void Update()
@@ -32,7 +34,10 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 worldMove = transform.TransformDirection(input) * speed;
+        float yaw = cameraController != null ? cameraController.Yaw : transform.eulerAngles.y;
+        rb.MoveRotation(Quaternion.Euler(0f, yaw, 0f));
+
+        Vector3 worldMove = Quaternion.Euler(0f, yaw, 0f) * input * speed;
         Vector3 velocity = rb.linearVelocity;
         rb.linearVelocity = new Vector3(worldMove.x, velocity.y, worldMove.z);
     }
