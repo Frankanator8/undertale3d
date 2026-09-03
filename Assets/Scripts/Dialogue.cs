@@ -11,6 +11,7 @@ public class Dialogue : MonoBehaviour
     
     public static String text;
     static bool updateText = false;
+    float timeSinceDone = 0f;
 
     public static void UpdateText(String newText)
     {
@@ -32,11 +33,20 @@ public class Dialogue : MonoBehaviour
             index = 0;
             updateText = false;
             displayText = "";
+            timeSinceDone = 0f;
+
         }
         if (index < text.Length)
         {
             displayText += text[index];
             index++;
+        } else
+        {
+            timeSinceDone += Time.deltaTime;
+            if (timeSinceDone > 2f)
+            {
+                UpdateText("");
+            }
         }
         textMesh.text = displayText;
 
